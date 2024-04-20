@@ -1,0 +1,9 @@
+// grammar;
+
+// pub CompUnit: CompUnit = <func_def: FuncDef> => CompUnit { <> };
+
+// FuncDef: FuncDef = {
+//     <func_type: FuncType> <ident: Ident> "(" ")" <block: Block> => FuncDef { <> }
+// }
+
+// FuncType: FuncType = "int" => FuncType::Int;
