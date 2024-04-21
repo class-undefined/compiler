@@ -5,3 +5,4 @@ lalrpop_mod!(pub calculator2);
 lalrpop_mod!(pub calculator3);
 lalrpop_mod!(pub calculator4);
 lalrpop_mod!(pub calculator5);
+lalrpop_mod!(pub sysy);

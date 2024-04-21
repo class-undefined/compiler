@@ -3,6 +3,7 @@ use compiler::calculator2;
 use compiler::calculator3;
 use compiler::calculator4;
 use compiler::calculator5;
+use compiler::sysy;
 use lalrpop_util::lalrpop_mod;
 
 mod ast;
@@ -44,4 +45,14 @@ fn calculator5() {
     let ast = calculator5::ExprParser::new().parse("(1 + (2 * 3))");
     let i = ast.unwrap();
     assert_eq!(format!("{:?}", i), "(1 + (2 * 3))")
+}
+
+#[test]
+fn sysy1() {
+    let input = r#"int main() {
+        return 0;
+      }
+      "#;
+    let unit = sysy::CompUnitParser::new().parse(input).unwrap();
+    println!("{:?}", unit);
 }

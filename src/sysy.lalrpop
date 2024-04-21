@@ -1,0 +1,35 @@
+use std::str::FromStr;
+use crate::ast::node::*;
+grammar;
+
+
+pub CompUnit: CompUnit = {
+    <func_def: FuncDef> => CompUnit { <> }
+}
+
+FuncDef: FuncDef = {
+    <func_type: FuncType> <ident: Ident> "(" ")" <block: Block> => FuncDef { <> }
+}
+
+FuncType: FuncType = {
+    "int" => FuncType::Int
+}
+
+Block: Block = {
+    "{" <stmt: Stmt> "}" => Block {<>}
+}
+
+Stmt: Stmt = {
+    "return" <num: Number> ";" => Stmt {<>}
+}
+
+
+Number: i32 = {
+    r"[0-9]+" => i32::from_str(<>).unwrap()
+}
+
+
+Ident: String = {
+    <s:r"[_a-zA-Z][_a-zA-Z0-9]*"> => s.to_string()
+}
+
