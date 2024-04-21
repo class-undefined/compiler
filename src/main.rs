@@ -1,6 +1,7 @@
 use compiler::calculator1;
 use compiler::calculator2;
 use compiler::calculator3;
+use compiler::calculator4;
 use lalrpop_util::lalrpop_mod;
 
 mod ast;
@@ -26,6 +27,13 @@ fn calculator2() {
 #[test]
 fn calculator3() {
     let ast = calculator3::ExprParser::new().parse("(1 + (2 * 3))");
+    let i = ast.unwrap();
+    assert_eq!(i, 7);
+}
+
+#[test]
+fn calculator4() {
+    let ast = calculator4::ExprParser::new().parse("(1 + (2 * 3))");
     let i = ast.unwrap();
     assert_eq!(i, 7);
 }
