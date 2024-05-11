@@ -1,3 +1,9 @@
+use std::env;
+use std::fs;
+use std::fs::File;
+use std::io::Write;
+
+use clap::{App, Arg};
 use compiler::calculator1;
 use compiler::calculator2;
 use compiler::calculator3;
@@ -5,10 +11,26 @@ use compiler::calculator4;
 use compiler::calculator5;
 use compiler::sysy;
 use lalrpop_util::lalrpop_mod;
-
 mod ast;
 fn main() {
-    // lalrpop_mod!(pub calculator1);
+    let args: Vec<String> = env::args().collect();
+    let mut koopa = String::new();
+    let mut output_path = String::new();
+
+    let mut args_iter = args.iter();
+    while let Some(arg) = args_iter.next() {
+        match arg.as_str() {
+            "-koopa" => koopa = args_iter.next().cloned().unwrap_or_default(),
+            "-o" => {
+                output_path = args_iter.next().cloned().unwrap_or_default();
+            }
+            _ => {}
+        }
+    }
+    let s = fs::read_to_string(koopa).unwrap();
+    let unit = sysy::CompUnitParser::new().parse(s.as_str()).unwrap();
+    let mut file = File::create(output_path).expect("create failed");
+    write!(&mut file, "{}", unit.func_def.to_ir()).expect("write failed");
 }
 #[test]
 fn calculator1() {
@@ -54,5 +76,5 @@ fn sysy1() {
       }
       "#;
     let unit = sysy::CompUnitParser::new().parse(input).unwrap();
-    println!("{:?}", unit);
+    println!("{}", unit.func_def.to_ir());
 }

@@ -1,0 +1,1 @@
+docker build --platform linux/amd64 -t pku-compiler-dev . # 解决 Dockerfile 中的 FROM 指令中的镜像不支持当前 CPU 架构的问题
