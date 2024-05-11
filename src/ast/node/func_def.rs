@@ -1,10 +1,7 @@
 use koopa::front::driver;
-use koopa::ir::builder_traits::*;
 use koopa::ir::*;
-#[derive(Debug)]
-pub struct CompUnit {
-    pub func_def: FuncDef,
-}
+
+use super::block::Block;
 
 #[derive(Debug)]
 pub struct FuncDef {
@@ -16,16 +13,6 @@ pub struct FuncDef {
 #[derive(Debug)]
 pub enum FuncType {
     Int,
-}
-
-#[derive(Debug)]
-pub struct Block {
-    pub stmt: Stmt,
-}
-
-#[derive(Debug)]
-pub struct Stmt {
-    pub num: i32,
 }
 
 impl FuncType {
@@ -50,17 +37,5 @@ impl FuncDef {
         let s = self.to_ir();
         let driver = driver::Driver::from(s);
         driver.generate_program().unwrap()
-    }
-}
-
-impl Block {
-    pub fn to_ir(&self) -> String {
-        format!("\n%entry: \n  {}\n", self.stmt.to_ir())
-    }
-}
-
-impl Stmt {
-    pub fn to_ir(&self) -> String {
-        format!("ret {}", self.num)
     }
 }
