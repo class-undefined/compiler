@@ -26,7 +26,46 @@ Block: Block = {
 }
 
 Stmt: Stmt = {
-    "return" <num: Number> ";" => Stmt {<>}
+    "return" <expr: Expr> ";" => Stmt {<>}
+}
+
+pub Expr: Box<Expr> = {
+    UnaryOp Expr => Box::new(Expr::UnaryOp(<>)),
+    NoUnaryExpr,
+}
+
+NoUnaryExpr: Box<Expr> = {
+    NoUnaryExpr BinOp Factor => Box::new(Expr::BinOp(<>)),
+    Factor
+}
+
+
+BinOp: OpCode = {
+    "+" => OpCode::Add,
+    "-" => OpCode::Sub,
+}
+
+UnaryOp: OpCode = {
+    "+" => OpCode::Pos,
+    "-" => OpCode::Neg,
+    "!" => OpCode::Not,
+}
+
+
+
+Factor: Box<Expr> = {
+    Factor FactorOp Term => Box::new(Expr::BinOp(<>)),
+    Term
+}
+
+FactorOp: OpCode = {
+    "*" => OpCode::Mul,
+    "/" => OpCode::Div
+}
+
+Term: Box<Expr> = {
+    Number => Box::new(Expr::Number(<>)),
+    "(" <Expr> ")",
 }
 
 

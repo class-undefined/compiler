@@ -24,6 +24,7 @@ impl Debug for Expr {
         }
     }
 }
+
 impl Debug for Opcode {
     fn fmt(&self, fmt: &mut Formatter) -> Result<(), Error> {
         use self::Opcode::*;

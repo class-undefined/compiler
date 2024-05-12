@@ -78,3 +78,13 @@ fn sysy1() {
     let unit = sysy::CompUnitParser::new().parse(input).unwrap();
     println!("{}", unit.func_def.to_ir());
 }
+
+#[test]
+fn sysy2() {
+    let input = r#"int main() {
+        return +(- -!6);
+      }
+      "#;
+    let unit = sysy::CompUnitParser::new().parse(input).unwrap();
+    println!("{}", unit.func_def.to_ir());
+}
